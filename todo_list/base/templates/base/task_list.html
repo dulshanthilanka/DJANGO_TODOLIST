@@ -1,0 +1,22 @@
+<!DOCKTYPE html>
+	<html>
+		<title> MY TO DO LIST </title>
+		<head> MY TO DO LIST </head>
+		<body>
+			<h1><a href="{% url 'task-create' %}">ADD TASK</a></h1>
+			<table>
+				<tr>
+					<th> ITEM </th>
+					<th></th>
+				</tr>
+				{% for task in tasks %}
+				<tr>
+					<td> {{task.title}} </td>
+					<td> <a href="{% url 'task' task.id %}">VIEW</a></td>
+				</tr>
+				{% empty %}
+				    <h3> NO ITEM IS FOUND </h3>
+				{% endfor %}
+			</table>
+		</body>
+	</html>
