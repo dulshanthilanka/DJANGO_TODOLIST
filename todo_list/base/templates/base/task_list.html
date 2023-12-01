@@ -1,39 +1,42 @@
-<!DOCKTYPE html>
-	<html>
-		<title> MY TO DO LIST </title>
-		<head> MY TO DO LIST {{color}}</head>
-		{% if request.user.is_authenticated %}
-		   <p>{{request.user}}</p>
-		   <a href="{% url 'logout' %}">LOGOUT</a>
-		{% else %}
-		    <a href="{% url 'login' %}">Login</a>
-		{% endif %}
+{% extends 'base/main.html' %}
+{% block content %}
+    <h1> MY TO-DO LIST {{ color }}</h1>
+    {% if request.user.is_authenticated %}
+        <p>{{ request.user }}</p>
+        <a href="{% url 'logout' %}">LOGOUT</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
 
-		<hr>
-		<body>
-			<h1><a href="{% url 'task-create' %}">ADD TASK</a></h1>
+    <hr>
+
+    <body>
+        <h1><a href="{% url 'task-create' %}">ADD TASK</a></h1>
 
         <form method="GET">
-        	<input type='text' name='search-area' value="{{ search-input }}">
-        	<input type="submit" value='Search'
+            <input type='text' name='search-area' value="{{ search_input }}">
+            <input type="submit" value='Search'>
         </form>
 
-			<table>
-				<tr>
-					<th> ITEM </th>
-					<th></th>
-					<th></th>
-				</tr>
-				{% for task in tasks %}
-				<tr>
-					<td> {{task.title}} </td>
-					<td> <a href="{% url 'task' task.id %}">VIEW</a></td>
-					<td> <a href="{% url 'task-update' task.id %}">EDIT</a></td>
-					<td> <a href="{% url 'task-delete' task.id %}">DELETE</a></td>
-				</tr>
-				{% empty %}
-				    <h3> NO ITEM IS FOUND </h3>
-				{% endfor %}
-			</table>
-		</body>
-	</html>
+        <table>
+            <tr>
+                <th>ITEM</th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td><a href="{% url 'task' task.id %}">VIEW</a></td>
+                    <td><a href="{% url 'task-update' task.id %}">EDIT</a></td>
+                    <td><a href="{% url 'task-delete' task.id %}">DELETE</a></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3"><h3>NO ITEM IS FOUND</h3></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
+
+{% endblock content %}
